@@ -24,13 +24,13 @@ module.exports.init = async (experiment, userInput) => {
   console.log("\nDone! Now run " + chalk.bold("jspsych run") + " to start developing!");
 };
 
-module.exports.build = async (experiment, isForJatos = false) => {
+module.exports.build = async (experiment, isProduction = true, isForJatos = false) => {
   const tasks = require("./tasks");
   const runner = new Listr([tasks.build, tasks.package]);
 
   const ctx = {
     experiment,
-    isProduction: true,
+    isProduction,
     isForJatos,
   };
 

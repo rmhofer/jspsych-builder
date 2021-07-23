@@ -126,9 +126,15 @@ const yargs = require("yargs")
           "Package the experiment for JATOS. " +
           "The resulting jzip file can then be imported as a JATOS study by JATOS.",
       });
+      yargs.option("production", {
+        alias: "p",
+        type: "boolean",
+        default: true,
+        description: "Build for production context",
+      });
     },
-    handler: ({ experimentFile, jatos }) =>
-      handleErrors(() => require("./commands").build(experimentFile, jatos)),
+    handler: ({ experimentFile, jatos, production }) =>
+      handleErrors(() => require("./commands").build(experimentFile, production, jatos)),
   })
 
   .command({
