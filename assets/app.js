@@ -20,28 +20,34 @@ const jsPsychConfig = {
 if (typeof jatos !== "undefined") {
   // Experiment is served by JATOS
   jatos.onLoad(() => {
-    jsPsych.init({
-      ...jsPsychConfig,
-      timeline: createTimeline(jatos.studyJsonInput),
-      on_finish: () => {
-        if (typeof on_finish_jatos !== "undefined") {
-          on_finish_jatos();
-        }
-        const results = jsPsych.data.get().json();
-        jatos.submitResultData(results, jatos.startNextComponent);
-      },
+    let timeline = createTimeline(jatos.studyJsonInput);
+    Promise.resolve(timeline).then((timeline) => {
+      jsPsych.init({
+        ...jsPsychConfig,
+        timeline: createTimeline(jatos.studyJsonInput),
+        on_finish: () => {
+          if (typeof on_finish_jatos !== "undefined") {
+            on_finish_jatos();
+          }
+          const results = jsPsych.data.get().json();
+          jatos.submitResultData(results, jatos.startNextComponent);
+        },
+      });
     });
   });
 } else {
-  // Experiment is run locally
-  jsPsych.init({
-    ...jsPsychConfig,
-    timeline: createTimeline(),
-    on_finish:
-      typeof on_finish !== "undefined"
-        ? on_finish
-        : () => {
-            jsPsych.data.displayData();
-          },
+  let timeline = createTimeline();
+  Promise.resolve(timeline).then((timeline) => {
+    // Experiment is run locally
+    jsPsych.init({
+      ...jsPsychConfig,
+      timeline: timeline,
+      on_finish:
+        typeof on_finish !== "undefined"
+          ? on_finish
+          : () => {
+              jsPsych.data.displayData();
+            },
+    });
   });
 }
