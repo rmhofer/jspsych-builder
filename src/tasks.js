@@ -189,6 +189,7 @@ const getWebpackConfig = (ctx) => {
     resolve: {
       // Try cwd node_modules first, then jspsych-builder node_modules
       modules: ["node_modules", builderNodeModulesDir],
+      extensions: [".ts", ".tsx", ".js"],
       alias: {
         // Set the current experiment file as an alias so it can be imported in app.js
         JsPsychBuilderCurrentExperiment: ctx.absoluteExperimentFilePath,
@@ -231,6 +232,13 @@ const getWebpackConfig = (ctx) => {
         {
           test: /\.s[ac]ss$/i,
           use: [{ loader: MiniCssExtractPlugin.loader }, "css-loader", "sass-loader"],
+        },
+        {
+          test: /\.jsx?$/,
+          exclude: /node_modules/,
+          use: {
+            loader: "ts-loader"
+          },
         },
       ],
     },
