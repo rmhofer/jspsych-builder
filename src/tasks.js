@@ -234,7 +234,7 @@ const getWebpackConfig = (ctx) => {
           use: [{ loader: MiniCssExtractPlugin.loader }, "css-loader", "sass-loader"],
         },
         {
-          test: /\.jsx?$/,
+          test: /\.tsx?$/,
           exclude: /node_modules/,
           use: {
             loader: "ts-loader"
