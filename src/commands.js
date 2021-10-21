@@ -38,9 +38,10 @@ module.exports.build = async (experiment, isForJatos = false) => {
   console.log(ctx.message);
 };
 
-module.exports.run = async (experiment) => {
+module.exports.run = async (experiment, options) => {
   const ctx = {
     experiment,
+    ...options,
     isProduction: false,
     isForJatos: false,
     watchAssets: true,

@@ -300,11 +300,12 @@ const webpackDevServer = {
           directory: ctx.dist,
         },
         devMiddleware: {
-          publicPath: "http://localhost:3000/",
+          publicPath: `http://${ctx.publicHost}:${ctx.publicPort}`,
         },
-        port: 3000,
+        port: ctx.privatePort,
         client: {
           overlay: true,
+          webSocketURL: `ws://${ctx.publicHost}:${ctx.publicPort}/ws`,
         },
       },
       compiler
@@ -312,7 +313,7 @@ const webpackDevServer = {
     await devServer.start();
 
     ctx.message = `Project is running at ${chalk.green.bold(
-      `http://localhost:${devServer.server.address().port}/`
+      `http://${ctx.publicHost}:${ctx.publicPort}/`
     )}`;
   },
 };

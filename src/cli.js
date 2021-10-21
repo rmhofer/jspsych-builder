@@ -107,8 +107,27 @@ const yargs = require("yargs")
       "running the experiment.",
     builder: (yargs) => {
       addExperimentFileOption(yargs);
+
+      yargs.options({
+        privatePort: {
+          type: "number",
+          default: 3000,
+          desc: "Private port (relative to server context) to bind dev server",
+        },
+        publicHost: {
+          type: "string",
+          default: "localhost",
+          desc: "Public host for dev server, accessible from client code",
+        },
+        publicPort: {
+          type: "number",
+          default: 3000,
+          desc: "Public port for dev server, accessible from client code",
+        }
+      })
     },
-    handler: ({ experimentFile }) => handleErrors(() => require("./commands").run(experimentFile)),
+    handler: ({ experimentFile, ...options }) =>
+      handleErrors(() => require("./commands").run(experimentFile, options)),
   })
 
   .command({
