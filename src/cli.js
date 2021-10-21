@@ -123,7 +123,11 @@ const yargs = require("yargs")
           type: "number",
           default: 3000,
           desc: "Public port for dev server, accessible from client code",
-        }
+        },
+        disableCors: {
+          type: "boolean",
+          desc: "If provided, send headers to disable CORS features",
+        },
       })
     },
     handler: ({ experimentFile, ...options }) =>

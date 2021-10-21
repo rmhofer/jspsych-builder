@@ -294,22 +294,30 @@ const webpackDevServer = {
       },
     });
 
-    const devServer = new WebpackDevServer(
-      {
-        static: {
-          directory: ctx.dist,
-        },
-        devMiddleware: {
-          publicPath: `http://${ctx.publicHost}:${ctx.publicPort}`,
-        },
-        port: ctx.privatePort,
-        client: {
-          overlay: true,
-          webSocketURL: `ws://${ctx.publicHost}:${ctx.publicPort}/ws`,
-        },
+    const devServerConfig = {
+      static: {
+        directory: ctx.dist,
       },
-      compiler
-    );
+      devMiddleware: {
+        publicPath: `http://${ctx.publicHost}:${ctx.publicPort}`,
+      },
+      port: ctx.privatePort,
+      client: {
+        overlay: true,
+        webSocketURL: `ws://${ctx.publicHost}:${ctx.publicPort}/ws`,
+      },
+    };
+
+    if (ctx.disableCors) {
+      devServerConfig.headers = {
+        ...devServerConfig.headers,
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+        "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+      }
+    }
+
+    const devServer = new WebpackDevServer(devServerConfig, compiler);
     await devServer.start();
 
     ctx.message = `Project is running at ${chalk.green.bold(
