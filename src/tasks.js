@@ -295,6 +295,7 @@ const webpackDevServer = {
     });
 
     const devServerConfig = {
+      disableHostCheck: true, // fine to use behind proxy
       static: {
         directory: ctx.dist,
       },
