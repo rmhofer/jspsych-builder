@@ -187,7 +187,7 @@ const getWebpackConfig = (ctx) => {
       path: ctx.dist,
     },
     devServer: {
-      disableHostCheck: true
+      allowedHosts: ['.syntaxgym.org']
     },
     resolve: {
       // Try cwd node_modules first, then jspsych-builder node_modules
