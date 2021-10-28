@@ -186,6 +186,9 @@ const getWebpackConfig = (ctx) => {
       filename: "js/app.js",
       path: ctx.dist,
     },
+    devServer: {
+      disableHostCheck: true
+    },
     resolve: {
       // Try cwd node_modules first, then jspsych-builder node_modules
       modules: ["node_modules", builderNodeModulesDir],
@@ -295,7 +298,6 @@ const webpackDevServer = {
     });
 
     const devServerConfig = {
-      disableHostCheck: true, // fine to use behind proxy
       static: {
         directory: ctx.dist,
       },
