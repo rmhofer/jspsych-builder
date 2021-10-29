@@ -187,7 +187,7 @@ const getWebpackConfig = (ctx) => {
       path: ctx.dist,
     },
     devServer: {
-      allowedHosts: ['.syntaxgym.org']
+      allowedHosts: ['all']
     },
     resolve: {
       // Try cwd node_modules first, then jspsych-builder node_modules
@@ -301,6 +301,7 @@ const webpackDevServer = {
       static: {
         directory: ctx.dist,
       },
+      allowedHosts: ['all'],
       devMiddleware: {
         publicPath: `http://${ctx.publicHost}:${ctx.publicPort}`,
       },
