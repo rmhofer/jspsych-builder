@@ -353,6 +353,7 @@ const html = {
         addRootSlash: false,
         ignorePath: ctx.relativeDistPath,
         quiet: true,
+        addPrefix: 'learning', // modified to account for reverse proxy routing
       }),
       plugins.removeEmptyLines({ removeComments: true }),
       gulp.dest(ctx.dist)
